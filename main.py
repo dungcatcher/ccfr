@@ -191,11 +191,12 @@ def game():
 
     old_store_item = 0
     old_mouse_x = 0
-    can_afford = [False, False, False, False, False, False, False, False, False, False, False, False, False, False,
-                  False, False, False, False, False, False]
+    can_afford = []
+    for _ in range(len(items) + 1):
+        can_afford.append(False)
 
     while True:
-        clock.tick(240)
+        clock.tick(60)
         WINDOW.fill((31, 38, 64), (0, 0, WIDTH - 400, HEIGHT))
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
@@ -223,10 +224,10 @@ def game():
         if mouse_x > WIDTH - 400 and current_store_item != old_store_item:
             update_store = True
 
-        if mouse_x < WIDTH - 400 and old_mouse_x >= WIDTH - 400:
+        if mouse_x < WIDTH - 400 <= old_mouse_x:
             update_store = True
 
-        if mouse_x > WIDTH - 400 and old_mouse_x <= WIDTH - 400:
+        if mouse_x > WIDTH - 400 >= old_mouse_x:
             update_store = True
 
         old_mouse_x = mouse_x
