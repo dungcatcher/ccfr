@@ -42,7 +42,7 @@ clock = pygame.time.Clock()
 
 offset = 0
 
-version = 'b1.4'
+version = 'b1.5'
 
 
 def save():
