@@ -48,7 +48,7 @@ version = 'b1.5'
 def save():
     global joules, value, per_second, items
 
-    state = open(r'./Assets/autosave.txt', "w")
+    state = open(r'./Assets/autosave.ccfr', "w")
 
     t = threading.Timer
     t.daemon = True
@@ -65,8 +65,8 @@ def save():
 def load():
     global joules, value, per_second, items
 
-    if os.path.isfile('./Assets/autosave.txt'):
-        state = open(r'./Assets/autosave.txt', 'r')
+    if os.path.isfile('./Assets/autosave.ccfr'):
+        state = open(r'./Assets/autosave.ccfr', 'r')
         autosave = json.loads(state.read())
         joules = autosave['joules']
         value = autosave['value']
@@ -157,7 +157,7 @@ def settings():
 
         if left_click:
             if delete_button.collidepoint(mouse_x, mouse_y):
-                os.remove(r'./Assets/autosave.txt')
+                os.remove(r'./Assets/autosave.ccfr')
                 load()
 
         left_click = False
