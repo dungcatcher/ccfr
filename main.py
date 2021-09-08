@@ -216,9 +216,6 @@ def game():
 
         menu = pygame.Rect(WIDTH - 400, 0, 400, HEIGHT)
 
-        # if 965 > mouse_x > 935:
-        #     update_store = True
-
         current_store_item = math.floor((mouse_y - offset + 125 - 50) / 100) - 1
 
         if mouse_x > WIDTH - 400 and current_store_item != old_store_item:
