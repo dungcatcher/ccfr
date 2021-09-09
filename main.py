@@ -30,9 +30,12 @@ items = {
         "info": "4.5 Kilojoules per second"},
     7: {"name": "Haizi Power", "price": 140000000, "base_price": 140000000, "owned": 0, "value": 50000,
         "info": "50 Kilojoules per second"},
-    8: {"name": "Nimama", "price": 9223372036854775807, "base_price": 9223372036854775807, "owned": 0,
-        "value": 2147483647, "info": "2147483647 Joules per second"}
+    8: {"name": "Immigrant Workers", "price": 1100000000, "base_price": 1100000000, "owned": 0,
+        "value": 600000, "info": "600 Kilojoules per second"},
+    9: {"name": "Nimama", "price": 9223372036854775807, "base_price": 9223372036854775807, "owned": 0,
+            "value": 2147483647, "info": "2147483647 Joules per second"}
 }
+
 
 # [location, velocity, timer]
 click_particles = []
