@@ -1,4 +1,4 @@
-import pygame, math, time, threading, random, json, os
+import pygame, math, time, threading, random, json, os, hashlib
 
 pygame.init()
 
@@ -9,7 +9,7 @@ WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Clicky Clicker Fusion Reactor")
 
 nova = r'./Assets/NovaSquare-Regular.ttf'
-nuclear = pygame.image.load(r'./Assets/nuclear symbol.png')
+nuclear = pygame.image.load(r'./Assets/nuclear_symbol.png')
 
 joules = 0
 value = 1
@@ -48,7 +48,7 @@ version = 'b1.5'
 def save():
     global joules, value, per_second, items
 
-    state = open(r'./Assets/autosave.txt', "w")
+    state = open(r'./Assets/autosave.ccfr', "w")
 
     t = threading.Timer
     t.daemon = True
@@ -57,21 +57,29 @@ def save():
     values = {
         'joules': joules, "value": value, 'per_second': per_second, 'items': items, 'version': version
     }
-    state.write(json.dumps(values))
+    contents = str(json.dumps(values))
+    content_hash = hashlib.md5(contents.encode()).hexdigest()
+    state.write(str(content_hash) + "\n" + str(contents))
     state.close()
-    print('Saved')
 
 
 def load():
     global joules, value, per_second, items
 
-    if os.path.isfile('./Assets/autosave.txt'):
-        state = open(r'./Assets/autosave.txt', 'r')
-        autosave = json.loads(state.read())
-        joules = autosave['joules']
-        value = autosave['value']
-        per_second = autosave['per_second']
-        items = autosave['items']
+    if os.path.isfile('./Assets/autosave.ccfr'):
+        state = open(r'./Assets/autosave.ccfr', 'r')
+        content = state.read().split('\n')
+        if str(hashlib.md5(content[1].encode()).hexdigest()) == str(content[0]):
+            autosave = json.loads(content[1])
+            joules = autosave['joules']
+            value = autosave['value']
+            per_second = autosave['per_second']
+            items = autosave['items']
+        else:
+            print("Wrong Hash!")
+            print("Old Hash: " + content[0])
+            print("New Hash: " + str(hashlib.md5(content[1].encode()).hexdigest()))
+            os.remove('./Assets/autosave.ccfr')
 
 
 def background():
@@ -157,7 +165,7 @@ def settings():
 
         if left_click:
             if delete_button.collidepoint(mouse_x, mouse_y):
-                os.remove(r'./Assets/autosave.txt')
+                os.remove(r'./Assets/autosave.ccfr')
                 load()
 
         left_click = False
